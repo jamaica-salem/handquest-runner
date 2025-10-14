@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>HandQuest Runner - Game</title>
+
+  <link rel="stylesheet" href="/css/output.css">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.jsdelivr.net/npm/phaser@3/dist/phaser.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+
+  <script src="/js/gameScene.js"></script>
+  <script src="/js/main.js" defer></script>
+
+  <style>
+    /* Base page and game container styles */
+    body {
+      margin: 0;
+      font-family: 'Press Start 2P', monospace;
+      background: #0f172a;
+      overflow: hidden; /* Prevents scrollbars */
+    }
+    #phaser-container {
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    canvas {
+      display: block;
+      margin: 0 auto;
+      image-rendering: pixelated;
+    }
+
+    /* --- Floating Camera Widget CSS --- */
+    #camera-container {
+      position: fixed;
+      bottom: 20px;
+      top: 120px;
+      right: 120px;
+      z-index: 999;
+      width: 320px;  /* Adjusted size */
+      height: 240px; /* Adjusted size */
+      border: 3px solid #faba43;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+      overflow: hidden;
+      background-color: #111;
+    }
+    #camera-container #output_canvas {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    #camera-header {
+      padding: 5px;
+      cursor: move;
+      z-index: 1000;
+      background-color: #faba43;
+      color: #111;
+      text-align: center;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div id="phaser-container"></div>
+
+  <div id="camera-container">
+    <div id="camera-header">DRAG ME</div>
+    <video id="input_video" style="display: none;"></video>
+    <canvas id="output_canvas"></canvas>
+  </div>
+
+  <script src="/js/hand-tracker.js"></script>
+
+  <script>
+    // Robust dragging script that waits for the page to load
+    document.addEventListener('DOMContentLoaded', () => {
+      const dragElement = document.getElementById("camera-container");
+      const header = document.getElementById("camera-header");
+
+      let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+
+      if (header) {
+        header.onmousedown = dragMouseDown;
+      } else {
+        dragElement.onmousedown = dragMouseDown;
+      }
+
+      function dragMouseDown(e) {
+        e = e || window.event;
+        e.preventDefault();
+        
+        // Allow free movement after first drag
+        dragElement.style.bottom = 'auto';
+        dragElement.style.right = 'auto';
+
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+        document.onmouseup = closeDragElement;
+        document.onmousemove = elementDrag;
+      }
+
+      function elementDrag(e) {
+        e = e || window.event;
+        e.preventDefault();
+        pos1 = pos3 - e.clientX;
+        pos2 = pos4 - e.clientY;
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+        dragElement.style.top = (dragElement.offsetTop - pos2) + "px";
+        dragElement.style.left = (dragElement.offsetLeft - pos1) + "px";
+      }
+
+      function closeDragElement() {
+        document.onmouseup = null;
+        document.onmousemove = null;
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>HandQuest Runner - Results</title>
+
+  <!-- Tailwind CSS -->
+  <link rel="stylesheet" href="/css/output.css">
+
+  <!-- Pixel font -->
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+  <!-- Phaser -->
+  <script src="https://cdn.jsdelivr.net/npm/phaser@3/dist/phaser.min.js"></script>
+
+  <!-- ResultsScene -->
+  <script src="/js/resultsScene.js"></script>
+
+  <!-- main.js handles scene selection -->
+  <script src="/js/main.js" defer></script>
+
+  <style>
+    /* Ensures page background (behind canvas) uses the same theme */
+    body {
+      margin: 0;
+      font-family: 'Press Start 2P', monospace;
+      background: #0f172a; /* fallback dark background */
+    }
+    /* Ensure the canvas (game container) expands to a 16:9 area while centered */
+    #phaser-container {
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #0f172a;  
+      overflow: hidden;
+    }
+
+    canvas {
+      display: block;
+      margin: 0 auto;
+      image-rendering: pixelated;
+    }
+  </style>
+</head>
+<body>
+  <div id="phaser-container"></div>
+</body>
+</html>

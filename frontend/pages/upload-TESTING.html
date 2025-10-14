@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Upload PDF - HandQuest Runner</title>
+  <link rel="stylesheet" href="style-test.css">
+</head>
+<body class="center-screen">
+  <div class="container">
+    <h2>📚 Upload Your Notes</h2>
+    <p>Drag and drop your PDF here or click to select</p>
+
+    <div id="dropArea" class="drop-area" tabindex="0" role="button" aria-label="Drop or click to upload PDF">
+      <p id="dropText">Drop your PDF here or click to select</p>
+    </div>
+
+    <div id="statusRow" style="margin-top:12px;">
+      <span id="loading" class="hidden">⏳ Uploading / processing...</span>
+      <span id="statusMessage" style="margin-left:8px;color:#ccc;"></span>
+    </div>
+
+    <div style="margin-top:18px;">
+      <button id="playBtn" disabled>Start Game</button>
+    </div>
+  </div>
+
+  <script src="upload-test.js"></script>
+</body>
+</html>
